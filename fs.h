@@ -2,6 +2,10 @@
 #define _FS_H
 #include "config.h"
 
+//#define bitmap_set 		____bitmap_set
+//#define bitmap_test 	____bitmap_test
+//#define bitmap_clear 	____bitmap_clear
+
 struct fs_t;
 
 typedef struct location_t {
@@ -75,12 +79,12 @@ typedef struct fs_t {
 
 unsigned int bitmap_first_free (struct bitmap_ops_t *op); 
 unsigned int bitmap_test (struct bitmap_ops_t *op, int free_block_number );
-unsigned int bitmap_set (struct bitmap_ops_t *op, int free_block_number);
-unsigned int bitmap_clear (struct bitmap_ops_t *op, int free_block_number); 
+unsigned int bitmap_set_ (struct bitmap_ops_t *op, int free_block_number);
+unsigned int bitmap_clear_ (struct bitmap_ops_t *op, int free_block_number); 
 unsigned int bitmap_clear_all (struct bitmap_ops_t *op);
 
 
-
+int fs_addr_to_free_block_number (fs_t *fs, void *free_block_addr);
 void* fs_abs_block_number_to_addr (fs_t *fs, int abs_block_number);
 void* device_locate (device_t *device, int absolute_block_number);
 
@@ -127,6 +131,7 @@ int inode_write (super_block_t *sb, int index, int offset, void *buffer, int len
 int inode_read (super_block_t *sb, int index, int offset, void *buffer, int len);
 int inode_resize (super_block_t *sb, int index, int size) ;
 int inode_shrink (super_block_t	*sb, int index, int size);
+int inode_shrink_1_level (super_block_t *sb, void **p);
 int inode_expand (super_block_t *sb, int index, int size);
 
 void *fs_allocate_block (fs_t *fs);

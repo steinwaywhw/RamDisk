@@ -1,3 +1,7 @@
+//#define _KERNEL_MODE
+
+#ifndef _CONFIG_H
+#define _CONFIG_H
 
 #define BLOCK_SIZE_IN_B 	256
 #define INODE_SIZE_IN_B		64
@@ -35,3 +39,31 @@
 #define MAX_FILE_SIZE		LOC_LIMIT_DOUBLE_INDIRECT
 
 #define PATH_DELIMITER_CHAR	'/'
+
+#define MAX_PROCESS		8
+#define MAX_OPENFILE	16
+
+#define PROC_ENTRY		"ramdisk"
+
+//typedef int bool;
+// #define true 1
+// #define false 0
+
+#ifdef _KERNEL_MODE
+
+
+void dummy (int anything);
+int dummy_getpid ();
+
+#define assert dummy
+#define malloc vmalloc
+#define free vfree
+#define getpid dummy_getpid
+
+#endif
+
+
+
+
+#endif
+
